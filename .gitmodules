@@ -1,0 +1,6 @@
+[submodule "unbreakable-stack"]
+	path = unbreakable-stack
+	url = https://github.com/Pikassik/unbreakable-stack.git
+[submodule "poem-sorting"]
+	path = poem-sorting
+	url = https://github.com/Pikassik/poem-sorting.git
