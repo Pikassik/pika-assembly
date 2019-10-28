@@ -1,5 +1,14 @@
-INSTRUCTION(add, 0xF1)
-INSTRUCTION(mov, 0xF2)
-INSTRUCTION(mul, 0xF3)
-INSTRUCTION(push, 0xF4)
-INSTRUCTION(pop, 0xF5)
+#pragma once
+#include <cstdint>
+#include <string_view>
+#include <cstdlib>
+#include <cstring>
+#include <cstdio>
+#include <cassert>
+
+struct Instruction {
+  uint32_t instruction;
+  uint32_t value;
+};
+
+uint32_t RegisterToInt(const char* register_name);

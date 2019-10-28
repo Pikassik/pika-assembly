@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(simple-assembler)
+project(pika-assembly)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -49,10 +49,12 @@ include_directories(headers)
 
 execute_process(COMMAND python3 ${CMAKE_CURRENT_SOURCE_DIR}/instructions_handler.py ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_executable(simple-assembler
+add_executable(pika-assembly
                headers/PikaCompiler.h
-               main.cpp)
+               main.cpp sources/PikaCompiler.cpp
+        headers/Instructions.h
+        sources/Instructions.cpp)
 
 
 
-target_link_libraries(simple-assembler gtest gtest_main poem-sorting unbreakable_stack)
+target_link_libraries(pika-assembly gtest gtest_main poem-sorting unbreakable_stack)

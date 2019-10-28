@@ -1,15 +1,14 @@
 #include <cstdio>
-
-
-void foo() {
-  printf("foo");
-}
-
-#define TUPADEF(func) {\
-  func();\
-}
+#include <iostream>
+#include <cstring>
+#include <PikaCompiler.h>
 
 int main() {
-  TUPADEF(foo)
+  PikaCompiler compiler;
+  compiler.SetSource("input");
+  compiler.SetExecutable("output");
+  compiler.Compile();
+  compiler.WriteBinary();
+  return 0;
 }
 
