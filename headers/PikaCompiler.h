@@ -8,16 +8,13 @@
 class PikaCompiler {
  public:
   PikaCompiler() = default;
+  PikaCompiler(const PikaCompiler&) = delete;
   void SetSource(const std::string& source);
   void SetExecutable(const std::string& executable);
   void Compile();
   void WriteBinary();
 
  private:
-  struct Instruction {
-  uint32_t instruction;
-  uint32_t value;
-};
 
   std::string source_name_;
   std::string executable_name_ = "a.out";

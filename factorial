@@ -1,0 +1,14 @@
+inint
+popr edx
+movrc eax 1
+movrc ebx 1
+movrc ecx 1
+factorial:
+cmp ecx edx
+jg end
+mulrr eax ecx
+addrr ecx ebx
+jmp factorial
+end:
+pushr eax
+outint

@@ -5,10 +5,13 @@
 
 int main() {
   PikaCompiler compiler;
-  compiler.SetSource("input");
-  compiler.SetExecutable("output");
+  compiler.SetSource("../solve_square");
+  compiler.SetExecutable("../output");
   compiler.Compile();
   compiler.WriteBinary();
+  PikaExecutor executor;
+  executor.ReadBinary("../output");
+  executor.Execute();
   return 0;
 }
 

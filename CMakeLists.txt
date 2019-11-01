@@ -53,7 +53,7 @@ add_executable(pika-assembly
                headers/PikaCompiler.h
                main.cpp sources/PikaCompiler.cpp
         headers/Instructions.h
-        sources/Instructions.cpp)
+        sources/Instructions.cpp headers/PikaExecutor.h sources/PikaExecutor.cpp)
 
 
 

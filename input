@@ -1,0 +1,7 @@
+X:
+inf
+popfr xmm0
+movfrc xmm1 1.
+cmpf xmm0 xmm1
+jg X
+outf

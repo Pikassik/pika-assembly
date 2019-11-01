@@ -1,16 +1,10 @@
 #include <PikaCompiler.h>
-#include <Instructions.h>
-
-#undef INSTRUCTION
-
-#define INSTRUCTION(instruction_name, opcode, func) {\
-  if (!strcmp(instruction_name, current_instruction_name)) func\
-}
-
 
 void PikaCompiler::SetSource(const std::string& source) {
-  source_name_ = source;
+  labels_.clear();
+  instructions_.clear();
   source_.ReadText(source);
+  source_name_ = source;
 }
 
 void PikaCompiler::SetExecutable(const std::string& executable) {
@@ -26,7 +20,7 @@ void PikaCompiler::Compile() {
 
   for (size_t i = 0, j = 0; i < source_.Size(); ++i) {
     if (source_.At(i)[source_.At(i).size() - 1] == ':') {
-      labels_[source_.At(i)] = j;
+      labels_[source_.At(i).substr(0, source_.At(i).size() - 1)] = j;
     } else {
       ++j;
     }
@@ -43,7 +37,7 @@ void PikaCompiler::Compile() {
 
     #include <CompileInstructions.h>
 
-    instructions_.push_back(current_instruction);
+    assert(false);
   }
 }
 
@@ -56,4 +50,3 @@ void PikaCompiler::WriteBinary() {
   fclose(binary);
 }
 
-#undef INSTRUCTION

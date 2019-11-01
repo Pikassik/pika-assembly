@@ -1,0 +1,78 @@
+inf
+inf
+inf
+popfr xmm2
+popfr xmm1
+popfr xmm0
+movfrc xmm3 0
+cmpf xmm0 xmm3
+jz zero_a
+movfrr xmm3 xmm1
+mulfrr xmm3 xmm1
+pushfr xmm3
+movfrr xmm3 xmm0
+mulfrc xmm3 4.
+mulfrr xmm3 xmm2
+popfr xmm2
+subfrr xmm2 xmm3
+movfrc xmm3 0.
+cmpf xmm2 xmm3
+jl no_roots
+jz one_root
+jg two_roots
+no_roots:
+outch 65
+jmp end
+one_root:
+mulfrc xmm1 -1.
+divfrr xmm1 xmm0
+movfrc xmm2 2
+divfrr xmm1 xmm2
+pushfr xmm1
+outf
+jmp end
+two_roots:
+sqrtf xmm2
+movfrr xmm3 xmm1
+mulfrc xmm3 -1.
+addfrr xmm3 xmm2
+pushfr xmm2
+movfrc xmm2 2.
+divfrr xmm3 xmm2
+divfrr xmm3 xmm0
+pushfr xmm3
+outf
+popfr xmm3
+pushc 10
+outch
+popr eax
+popfr xmm2
+movfrr xmm3 xmm1
+mulfrc xmm3 -1.
+subfrr xmm3 xmm2
+movfrc xmm2 2.
+divfrr xmm3 xmm2
+divfrr xmm3 xmm0
+pushfr xmm3
+outf
+jmp end
+zero_a:
+cmpf xmm1 xmm3
+jz zero_b
+movfrc xmm3 -1.
+mulfrr xmm2 xmm3
+divfrr xmm2 xmm1
+pushfr xmm2
+outf
+jmp end
+zero_b:
+cmpf xmm2 xmm3
+jz zero_c
+pushc 66
+outch
+jmp end
+zero_c:
+pushc 67
+outch
+jmp end
+end:
