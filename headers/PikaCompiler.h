@@ -22,13 +22,3 @@ class PikaCompiler {
   text::Text source_;
   std::vector<Instruction> instructions_;
 };
-
-
-
-//#define INSTRUCTION(a, b) {\
-///* some code*/\
-//}
-//
-//for (size_t i = 0; i < n; ++i) {
-//#include <Instructions.h>
-//}

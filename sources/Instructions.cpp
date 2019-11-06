@@ -26,7 +26,7 @@ uint32_t Opcode(const Instruction& instr) {
 ////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////_INSTRUCTIONS_/////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
+/*
 void pushc(ExecutorState& state, uint32_t constant) {
   state.stack.Push(constant);
 }
@@ -200,4 +200,4 @@ void sqrtf(struct ExecutorState& state, size_t reg0) {
 void divfrr(struct ExecutorState& state, size_t reg0, size_t reg1) {
   state.float_registers[reg0] /= state.float_registers[reg1];
 }
-
+*/

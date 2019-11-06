@@ -45,7 +45,7 @@ label =\
 """
 
 for line in instructions:
-    splitted = line.split()
+    splitted = line[0:line.find('{')].split()
     current_instruction = default_instruction
 
     if len(splitted) >= 3:
@@ -73,8 +73,10 @@ for line in instructions:
         format(instr_name=splitted[0], opcode=splitted[1]))
 
 compile_instructions_header.close()
+instructions.seek(0)
 
-execute_instructions_header = open(sys.argv[1] + '/headers/ExecuteInstructions.h', 'w')
+execute_instructions_header =\
+    open(sys.argv[1] + '/headers/ExecuteInstructions.h', 'w')
 
 
 """
@@ -106,10 +108,10 @@ constF =\
   float arg{number} = instr.value;
 """
 
-instructions.seek(0)
+
 
 for line in instructions:
-    splitted = line.split()
+    splitted = line[0:line.find('{')].split()
     current_instruction = default_instruction
     if len(splitted) >= 3:
         if splitted[2] == 'reg':
@@ -142,4 +144,93 @@ for line in instructions:
         format(opcode=splitted[1], code=current_instruction))
 
 execute_instructions_header.close()
+instructions.seek(0)
+
+generated_instructions_h =\
+    open(sys.argv[1] + '/headers/GeneratedInstructions.h', "w")
+generated_instructions_cpp =\
+    open(sys.argv[1] + '/sources/GeneratedInstructions.cpp', "w")
+
+generated_instructions_h.write(
+"""\
+#include <PikaExecutor.h>
+#include <InstructionsDefines.h>
+""")
+
+generated_instructions_cpp.write(
+"""\
+#include <PikaExecutor.h>
+#include <InstructionsDefines.h>
+"""
+)
+
+default_instruction =\
+"""\
+void {instr_name}(struct ExecutorState& state\
+"""
+
+reg0 =\
+"""\
+size_t reg0\
+"""
+
+reg1 =\
+"""\
+size_t reg1\
+"""
+
+constant =\
+"""\
+uint32_t constant\
+"""
+
+label =\
+"""\
+size_t label\
+"""
+
+for line in instructions:
+    splitted = line[0:line.find('{')].split()
+    current_instruction = default_instruction.format(instr_name=splitted[0])
+    if len(splitted) >= 3:
+        current_instruction += ', '
+        if splitted[2] == 'reg':
+            current_instruction += reg0
+        elif splitted[2] == 'const':
+            current_instruction += constant
+        elif splitted[2] == 'constf':
+            current_instruction += constant
+        elif splitted[2] == 'label':
+            current_instruction += label
+
+    if len(splitted) >= 4:
+        current_instruction += ', '
+        if splitted[3] == 'reg':
+            current_instruction += reg1
+        elif splitted[3] == 'const':
+            current_instruction += constant
+        elif splitted[3] == 'constf':
+            current_instruction += constant
+    current_instruction += ')'
+    generated_instructions_h.write(current_instruction + ';\n')
+    current_instruction += ' ' + line[line.find('{'):]
+    generated_instructions_cpp.write(current_instruction)
+
+generated_instructions_h.write(
+"\n"
+"#undef TOFLOAT\n"
+"#undef TOINT\n"
+"#undef TOP\n"
+"#undef PUSH\n"
+"#undef POP\n"
+"#undef PC\n"
+"#undef IREG\n"
+"#undef FREG\n"
+"#undef ZF\n"
+"#undef SF\n"
+"#undef CF\n"
+"#undef OF\n")
+
+generated_instructions_h.close()
+generated_instructions_cpp.close()
 instructions.close()
