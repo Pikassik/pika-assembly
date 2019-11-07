@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <array>
 #include <vector>
+#include <GeneratedInstructions.h>
 #undef IS_NOT_FATAL
 #define IS_NOT_FATAL false
 
@@ -18,7 +19,13 @@ struct ExecutorState {
   bool ZF = false, SF = false, CF = false, OF = false;
   std::array<uint32_t, 4> integral_registers = {0, 0, 0, 0};
   std::array<float, 4> float_registers = {0.f, 0.f, 0.f, 0.f};
-  UnbreakableStack<uint32_t, Static, DefaultDump<uint32_t>, kStackSize> stack;
+  union StackValue {
+    uint32_t int_v;
+    float float_v;
+    explicit StackValue(const float& float_v) : float_v(float_v) {};
+    explicit StackValue(const uint32_t& int_v) : int_v(int_v) {};
+  };
+  UnbreakableStack<StackValue, Static, DefaultDump<StackValue>, kStackSize> stack;
 };
 
 class PikaExecutor {

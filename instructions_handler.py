@@ -154,7 +154,6 @@ generated_instructions_cpp =\
 generated_instructions_h.write(
 """\
 #include <PikaExecutor.h>
-#include <InstructionsDefines.h>
 """)
 
 generated_instructions_cpp.write(
@@ -216,20 +215,23 @@ for line in instructions:
     current_instruction += ' ' + line[line.find('{'):]
     generated_instructions_cpp.write(current_instruction)
 
-generated_instructions_h.write(
-"\n"
-"#undef TOFLOAT\n"
-"#undef TOINT\n"
-"#undef TOP\n"
-"#undef PUSH\n"
-"#undef POP\n"
-"#undef PC\n"
-"#undef IREG\n"
-"#undef FREG\n"
-"#undef ZF\n"
-"#undef SF\n"
-"#undef CF\n"
-"#undef OF\n")
+undefs =\
+"\n"\
+"#undef TOFLOAT\n"\
+"#undef TOINT\n"\
+"#undef ITOP\n"\
+"#undef FTOP\n"\
+"#undef PUSH\n"\
+"#undef POP\n"\
+"#undef PC\n"\
+"#undef IREG\n"\
+"#undef FREG\n"\
+"#undef ZF\n"\
+"#undef SF\n"\
+"#undef CF\n"\
+"#undef OF\n"\
+
+generated_instructions_cpp.write(undefs)
 
 generated_instructions_h.close()
 generated_instructions_cpp.close()

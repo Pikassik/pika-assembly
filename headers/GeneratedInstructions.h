@@ -1,5 +1,4 @@
 #include <PikaExecutor.h>
-#include <InstructionsDefines.h>
 void pushc(struct ExecutorState& state, uint32_t constant);
 void pushr(struct ExecutorState& state, size_t reg0);
 void pushfc(struct ExecutorState& state, uint32_t constant);
@@ -34,16 +33,3 @@ void subrr(struct ExecutorState& state, size_t reg0, size_t reg1);
 void subfrr(struct ExecutorState& state, size_t reg0, size_t reg1);
 void sqrtf(struct ExecutorState& state, size_t reg0);
 void divfrr(struct ExecutorState& state, size_t reg0, size_t reg1);
-
-#undef TOFLOAT
-#undef TOINT
-#undef TOP
-#undef PUSH
-#undef POP
-#undef PC
-#undef IREG
-#undef FREG
-#undef ZF
-#undef SF
-#undef CF
-#undef OF

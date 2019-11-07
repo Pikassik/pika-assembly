@@ -1,7 +1,9 @@
 #pragma once
-#define TOFLOAT(x) *reinterpret_cast<const float*>(&x)
-#define TOINT(x) *reinterpret_cast<const uint32_t*>(&x)
-#define TOP state.stack.Top()
+#define TOINT(x) reinterpret_cast<const uint32_t&>(x)
+#define TOFLOAT(x) reinterpret_cast<const float&>(x)
+#define VAL(x) ExecutorState::StackValue(x)
+#define ITOP state.stack.Top().int_v
+#define FTOP state.stack.Top().float_v
 #define PUSH(x) state.stack.Push(x)
 #define POP state.stack.Pop()
 #define PC state.program_counter

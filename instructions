@@ -1,24 +1,24 @@
-pushc 0x10 const { PUSH(constant); }
-pushr 0x11 reg { PUSH(IREG(reg0)); }
-pushfc 0x12 constf { PUSH(constant); }
-pushfr 0x13 reg { PUSH(TOINT(FREG(reg0))); }
+pushc 0x10 const { PUSH(VAL(TOINT(constant))); }
+pushr 0x11 reg { PUSH(VAL(TOINT(IREG(reg0)))); }
+pushfc 0x12 constf { PUSH(VAL(TOFLOAT(constant))); }
+pushfr 0x13 reg { PUSH(VAL(FREG(reg0))); }
 movrr 0x20 reg reg { IREG(reg0) = IREG(reg1); }
 movrc 0x21 reg const { IREG(reg0) = constant; }
 movfrr 0x22 reg reg { FREG(reg0) = FREG(reg1); }
 movfrc 0x23 reg constf { FREG(reg0) = TOFLOAT(constant); }
-popr 0x30 reg { IREG(reg0) = TOP; POP; }
-popfr 0x31 reg { FREG(reg0) = TOFLOAT(TOP); POP; }
+popr 0x30 reg { IREG(reg0) = ITOP; POP; }
+popfr 0x31 reg { FREG(reg0) = FTOP; POP; }
 addrr 0x40 reg reg { IREG(reg0) += IREG(reg1); }
 addfrr 0x41 reg reg { FREG(reg0) += FREG(reg1); }
 mulrr 0x50 reg reg { IREG(reg0) *= IREG(reg1); }
 mulfrr 0x52 reg reg { FREG(reg0) *= FREG(reg1); }
 mulfrc 0x53 reg constf { FREG(reg0) *= TOFLOAT(constant); }
-inint 0x60 { uint32_t in; scanf("%d", &in); PUSH(in); }
-inch 0x61 { int32_t ch; ch = getchar(); PUSH(ch); }
-inf 0x62 { float fl; scanf("%f", &fl); PUSH(TOINT(fl)); }
-outint 0x70 { printf("%d", TOP); }
-outch 0x71 { printf("%c", TOP); }
-outf 0x72 { printf("%f", TOFLOAT(TOP)); }
+inint 0x60 { uint32_t in; scanf("%d", &in); PUSH(VAL(TOINT(in))); }
+inch 0x61 { int32_t ch; ch = getchar(); PUSH(VAL(TOINT(ch))); }
+inf 0x62 { float fl; scanf("%f", &fl); PUSH(VAL(fl)); }
+outint 0x70 { printf("%d", ITOP); }
+outch 0x71 { printf("%c", ITOP); }
+outf 0x72 { printf("%f", FTOP); }
 cmp 0x80 reg reg { auto nv = IREG(reg0) - IREG(reg1); ZF = nv == 0; SF = (nv >> 31) == 1; CF = IREG(reg0) < IREG(reg1); OF = ((IREG(reg0) >> 31) != (IREG(reg1) >> 31)) && ((nv >> 31) != (IREG(reg0) >> 31)); }
 cmpf 0x81 reg reg { float nv = FREG(reg0) - FREG(reg1); ZF = nv == 0; SF = (TOINT(nv) >> 31) == 1; CF = abs(FREG(reg0)) < abs(FREG(reg1)); OF = FREG(reg0) * FREG(reg1) < 0 && nv * FREG(reg0) < 0; }
 jmp 0x90 label { PC = label; PC -= 1; }
