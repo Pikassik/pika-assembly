@@ -5,7 +5,7 @@
 
 int main() {
   PikaCompiler compiler;
-  compiler.SetSource("../solve_square");
+  compiler.SetSource("../factorial");
   compiler.SetExecutable("../output");
   compiler.Compile();
   compiler.WriteBinary();
