@@ -19,8 +19,8 @@ inf         0x62                { float fl; scanf("%f", &fl); PUSH(VAL(fl)); }
 outint      0x70                { printf("%d", ITOP); }
 outch       0x71                { printf("%c", ITOP); }
 outf        0x72                { printf("%f", FTOP); }
-cmp         0x80 reg reg        { auto  nv = IREG(reg0) - IREG(reg1); ZF = nv == 0; SF = (nv >> 31) == 1; CF = IREG(reg0) < IREG(reg1); OF = ((IREG(reg0) >> 31) != (IREG(reg1) >> 31)) && ((nv >> 31) != (IREG(reg0) >> 31)); }
-cmpf        0x81 reg reg        { float nv = FREG(reg0) - FREG(reg1); ZF = nv == 0; SF = (TOINT(nv) >> 31) == 1; CF = abs(FREG(reg0)) < abs(FREG(reg1)); OF = FREG(reg0) * FREG(reg1) < 0 && nv * FREG(reg0) < 0; }
+cmp         0x80 reg reg        {*}
+cmpf        0x81 reg reg        {*}
 jmp         0x90 label          { PC = label; PC -= 1; }
 jz          0x91 label          { if (ZF) jmp(state, label); }
 jnz         0x92 label          { if (!ZF) jmp(state, label); }

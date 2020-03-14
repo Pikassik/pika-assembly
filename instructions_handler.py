@@ -1,7 +1,7 @@
 import sys
 
 
-instructions = open(sys.argv[1] + '/instructions', 'r')
+instructions = open(sys.argv[1] + '/instructions.cpp', 'r')
 compile_instructions_header =\
     open(sys.argv[1] + '/headers/CompileInstructions.h', 'w')
 
@@ -109,7 +109,6 @@ constF =\
 """
 
 
-
 for line in instructions:
     splitted = line[0:line.find('{')].split()
     current_instruction = default_instruction
@@ -212,26 +211,16 @@ for line in instructions:
             current_instruction += constant
     current_instruction += ')'
     generated_instructions_h.write(current_instruction + ';\n')
+    if line[line.find('{') + 1] == '*':
+        continue
     current_instruction += ' ' + line[line.find('{'):]
     generated_instructions_cpp.write(current_instruction)
 
-undefs =\
-"\n"\
-"#undef TOFLOAT\n"\
-"#undef TOINT\n"\
-"#undef ITOP\n"\
-"#undef FTOP\n"\
-"#undef PUSH\n"\
-"#undef POP\n"\
-"#undef PC\n"\
-"#undef IREG\n"\
-"#undef FREG\n"\
-"#undef ZF\n"\
-"#undef SF\n"\
-"#undef CF\n"\
-"#undef OF\n"\
-
-generated_instructions_cpp.write(undefs)
+generated_instructions_cpp.write(
+"""
+#include <InstructionsUndefs.h>
+"""
+)
 
 generated_instructions_h.close()
 generated_instructions_cpp.close()

@@ -13,3 +13,4 @@
 #define SF state.SF
 #define CF state.CF
 #define OF state.OF
+#define LET auto

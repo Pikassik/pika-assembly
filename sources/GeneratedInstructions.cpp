@@ -21,8 +21,6 @@ void inf(struct ExecutorState& state) { float fl; scanf("%f", &fl); PUSH(VAL(fl)
 void outint(struct ExecutorState& state) { printf("%d", ITOP); }
 void outch(struct ExecutorState& state) { printf("%c", ITOP); }
 void outf(struct ExecutorState& state) { printf("%f", FTOP); }
-void cmp(struct ExecutorState& state, size_t reg0, size_t reg1) { auto nv = IREG(reg0) - IREG(reg1); ZF = nv == 0; SF = (nv >> 31) == 1; CF = IREG(reg0) < IREG(reg1); OF = ((IREG(reg0) >> 31) != (IREG(reg1) >> 31)) && ((nv >> 31) != (IREG(reg0) >> 31)); }
-void cmpf(struct ExecutorState& state, size_t reg0, size_t reg1) { float nv = FREG(reg0) - FREG(reg1); ZF = nv == 0; SF = (TOINT(nv) >> 31) == 1; CF = abs(FREG(reg0)) < abs(FREG(reg1)); OF = FREG(reg0) * FREG(reg1) < 0 && nv * FREG(reg0) < 0; }
 void jmp(struct ExecutorState& state, size_t label) { PC = label; PC -= 1; }
 void jz(struct ExecutorState& state, size_t label) { if (ZF) jmp(state, label); }
 void jnz(struct ExecutorState& state, size_t label) { if (!ZF) jmp(state, label); }
@@ -34,16 +32,4 @@ void subrr(struct ExecutorState& state, size_t reg0, size_t reg1) { IREG(reg0) -
 void subfrr(struct ExecutorState& state, size_t reg0, size_t reg1) { FREG(reg0) -= FREG(reg1); }
 void sqrtf(struct ExecutorState& state, size_t reg0) { FREG(reg0) = sqrt(FREG(reg0)); }
 void divfrr(struct ExecutorState& state, size_t reg0, size_t reg1) { FREG(reg0) /= FREG(reg1); }
-#undef TOFLOAT
-#undef TOINT
-#undef ITOP
-#undef FTOP
-#undef PUSH
-#undef POP
-#undef PC
-#undef IREG
-#undef FREG
-#undef ZF
-#undef SF
-#undef CF
-#undef OF
+#include <InstructionsUndefs.h>
