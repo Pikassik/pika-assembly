@@ -5,10 +5,11 @@ movrc ebx 1
 movrc ecx 1
 factorial:
 cmp ecx edx
-jg end
+jg endfun
 mulrr eax ecx
 addrr ecx ebx
 jmp factorial
-end:
+endfun:
 pushr eax
 outint
+end

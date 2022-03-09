@@ -279,3 +279,9 @@ if (!strcmp("divfrr", current_instruction_name)) {
   instructions_.push_back(current_instruction);
   continue;
 }
+if (!strcmp("end", current_instruction_name)) {
+  current_instruction.instruction = 0xFF;
+  current_instruction.value = 0;
+  instructions_.push_back(current_instruction);
+  continue;
+}

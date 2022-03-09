@@ -22,7 +22,8 @@ size_t PikaExecutor::GetInstructionsCount(std::FILE* file) {
 }
 
 void PikaExecutor::Execute() {
-  while (state_.program_counter < instructions_.size()) {
+  while (state_.program_counter < instructions_.size() &&
+         Opcode(instructions_[state_.program_counter]) != 0xFF) {
     Instruction instr = instructions_[state_.program_counter];
     switch (Opcode(instr)) {
     #include <ExecuteInstructions.h>

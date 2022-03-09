@@ -32,3 +32,4 @@ subrr       0xA0 reg reg        { IREG(reg0) -= IREG(reg1); }
 subfrr      0xA1 reg reg        { FREG(reg0) -= FREG(reg1); }
 sqrtf       0xB0 reg            { FREG(reg0) = sqrt(FREG(reg0)); }
 divfrr      0xC1 reg reg        { FREG(reg0) /= FREG(reg1); }
+end         0xFF                {}

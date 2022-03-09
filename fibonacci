@@ -1,0 +1,17 @@
+inint
+popr edx
+movrc eax 0
+movrc ebx 1
+movrc ecx 1
+fib:
+cmp ecx edx
+jge endfib
+pushr ebx
+addrr ebx eax
+movrc eax 1
+addrr ecx eax
+popr eax
+jmp fib
+endfib:
+pushr ebx
+outint

@@ -33,3 +33,4 @@ void subrr(struct ExecutorState& state, size_t reg0, size_t reg1);
 void subfrr(struct ExecutorState& state, size_t reg0, size_t reg1);
 void sqrtf(struct ExecutorState& state, size_t reg0);
 void divfrr(struct ExecutorState& state, size_t reg0, size_t reg1);
+void end(struct ExecutorState& state);
