@@ -8,6 +8,7 @@
 
 #include <UnbreakableStack.hpp>
 #include <Instructions.h>
+#include <iostream>
 
 constexpr size_t kStackSize =
     static_cast<size_t>(1) << static_cast<size_t>(13);
@@ -26,11 +27,15 @@ struct ExecutorState {
     explicit StackValue(const uint32_t& int_v) : int_v(int_v) {};
   };
   UnbreakableStack<StackValue, Static, DefaultDump<StackValue>, kStackSize> stack;
+  FILE* binary = nullptr;
 };
+
+std::string GetStringFromBinary(FILE* file, uint32_t offset, uint32_t size);
 
 class PikaExecutor {
  public:
   PikaExecutor() = default;
+  ~PikaExecutor();
   void ReadBinary(const std::string& file_name);
   void Execute();
  private:

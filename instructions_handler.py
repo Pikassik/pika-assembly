@@ -43,6 +43,13 @@ label =\
 """\
   current_instruction.value = labels_[strtok(nullptr, \" \")];
 """
+string =\
+"""\
+  current_instruction.value = current_offset_;
+  strings_in_asm_.push_back(std::string(strtok(nullptr, \" \")));
+  current_instruction.value += ((uint32_t)strings_in_asm_.back().size() << 16);
+  current_offset_ += strings_in_asm_.back().size();
+"""
 
 for line in instructions:
     splitted = line[0:line.find('{')].split()
@@ -57,6 +64,8 @@ for line in instructions:
             current_instruction += constF
         elif splitted[2] == 'label':
             current_instruction += label
+        elif splitted[2] == 'string':
+            current_instruction += string
 
     if len(splitted) >= 4:
         if splitted[3] == 'reg' or splitted[3] == 'regf':
@@ -120,6 +129,8 @@ for line in instructions:
         elif splitted[2] == 'constf':
             current_instruction += constF.format(number=0)
         elif splitted[2] == 'label':
+            current_instruction += const_or_label.format(number=0)
+        elif splitted[2] == 'string':
             current_instruction += const_or_label.format(number=0)
 
     if len(splitted) >= 4:
@@ -200,6 +211,8 @@ for line in instructions:
             current_instruction += constant
         elif splitted[2] == 'label':
             current_instruction += label
+        elif splitted[2] == 'string':
+            current_instruction += constant
 
     if len(splitted) >= 4:
         current_instruction += ', '

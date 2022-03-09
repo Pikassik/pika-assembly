@@ -21,4 +21,6 @@ class PikaCompiler {
   std::unordered_map<std::string_view, size_t> labels_;
   text::Text source_;
   std::vector<Instruction> instructions_;
+  std::vector<std::string> strings_in_asm_;
+  uint32_t current_offset_ = 0;
 };

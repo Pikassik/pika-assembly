@@ -32,5 +32,6 @@ void subrr(struct ExecutorState& state, size_t reg0, size_t reg1) { IREG(reg0) -
 void subfrr(struct ExecutorState& state, size_t reg0, size_t reg1) { FREG(reg0) -= FREG(reg1); }
 void sqrtf(struct ExecutorState& state, size_t reg0) { FREG(reg0) = sqrt(FREG(reg0)); }
 void divfrr(struct ExecutorState& state, size_t reg0, size_t reg1) { FREG(reg0) /= FREG(reg1); }
-void end(struct ExecutorState& state) { return; }
+void prints(struct ExecutorState& state, uint32_t constant) { std::cout << GetStringFromBinary(state.binary, TOINT(constant) & 0xFFFF, TOINT(constant) >> 16); }
+void end(struct ExecutorState& state) {}
 #include <InstructionsUndefs.h>

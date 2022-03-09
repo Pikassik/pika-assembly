@@ -279,6 +279,16 @@ if (!strcmp("divfrr", current_instruction_name)) {
   instructions_.push_back(current_instruction);
   continue;
 }
+if (!strcmp("prints", current_instruction_name)) {
+  current_instruction.instruction = 0xC2;
+  current_instruction.value = 0;
+  current_instruction.value = current_offset_;
+  strings_in_asm_.push_back(std::string(strtok(nullptr, " ")));
+  current_instruction.value += ((uint32_t)strings_in_asm_.back().size() << 16);
+  current_offset_ += strings_in_asm_.back().size();
+  instructions_.push_back(current_instruction);
+  continue;
+}
 if (!strcmp("end", current_instruction_name)) {
   current_instruction.instruction = 0xFF;
   current_instruction.value = 0;

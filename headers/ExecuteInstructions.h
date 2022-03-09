@@ -176,6 +176,11 @@ case 0xC1: {
   divfrr(state_, arg0, arg1);
   break;
 }
+case 0xC2: {
+  uint32_t arg0 = instr.value;
+  prints(state_, arg0);
+  break;
+}
 case 0xFF: {
   end(state_);
   break;

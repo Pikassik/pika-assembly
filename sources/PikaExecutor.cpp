@@ -3,14 +3,17 @@
 
 void PikaExecutor::ReadBinary(const std::string& file_name) {
   instructions_.clear();
+  fclose(state_.binary);
   FILE* binary = fopen(file_name.c_str(), "r");
   assert(binary != nullptr);
-  instructions_.resize(GetInstructionsCount(binary));
+  uint32_t instructions_count = 0;
+  fread(&instructions_count, sizeof(instructions_count), 1, binary);
+  instructions_.resize(instructions_count);
   std::fread(instructions_.data(),
              sizeof(Instruction),
              instructions_.size(),
              binary);
-  fclose(binary);
+  state_.binary = binary;
 }
 
 size_t PikaExecutor::GetInstructionsCount(std::FILE* file) {
@@ -33,3 +36,15 @@ void PikaExecutor::Execute() {
   }
 }
 
+std::string GetStringFromBinary(FILE* binary, uint32_t offset, uint32_t size) {
+  std::string out(size, 'o');
+  long before = std::ftell(binary);
+  std::fseek(binary, offset, SEEK_CUR);
+  std::fread(out.data(), sizeof(char), size, binary);
+  std::fseek(binary, before, SEEK_SET);
+  return out;
+}
+
+PikaExecutor::~PikaExecutor() {
+  fclose(state_.binary);
+}

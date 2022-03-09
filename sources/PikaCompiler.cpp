@@ -1,4 +1,5 @@
 #include <PikaCompiler.h>
+#include <iostream>
 
 void PikaCompiler::SetSource(const std::string& source) {
   labels_.clear();
@@ -43,10 +44,21 @@ void PikaCompiler::Compile() {
 
 void PikaCompiler::WriteBinary() {
   FILE* binary = std::fopen(executable_name_.c_str(), "w");
+  uint32_t instructions_count = instructions_.size();
+  std::fwrite(&instructions_count,
+              sizeof(instructions_count),
+              1,
+              binary);
   std::fwrite(instructions_.data(),
               sizeof(Instruction),
               instructions_.size(),
               binary);
+  for (auto&& str: strings_in_asm_) {
+    std::fwrite(str.c_str(),
+           sizeof(char),
+         str.size(),
+         binary);
+  }
   fclose(binary);
 }
 
